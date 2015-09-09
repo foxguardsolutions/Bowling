@@ -11,46 +11,68 @@ namespace BowlingKata
             Roll.AllowedValues = "-123456789/X";
         }
 
-        // Tests that a Roll instance can be instantiated with
-        // a character value
         [Test]
-        public void Constructor()
-        {
-            Roll r1 = new Roll('1');
-            Assert.AreEqual(1, r1.ToIntValue());
-        }
-
-        // Tests the StrValueToIntValue method correctly converts
-        // the range of characters to integer values
-        [Test]
-        public void StrValueToIntValue()
+        public void ConstructorInitializesToZero()
         {
             Roll r1 = new Roll();
-            Assert.AreEqual(0, r1.ToIntValue());
-            r1.Value = '1';
-            Assert.AreEqual(1, r1.ToIntValue());
-            r1.Value = '9';
-            Assert.AreEqual(9, r1.ToIntValue());
-            r1.Value = '/';
+            Assert.AreEqual('-', r1.Value);
+        }
+
+        [Test]
+        public void ConstructorSetsValueToParameter()
+        {
+            Roll r1 = new Roll('1');
+            Assert.AreEqual('1', r1.Value);
+        }
+
+        [Test]
+        public void ToIntValueConvertsArbitraryStrNumberToInt()
+        {
+            Roll r1 = new Roll('4');
+            Assert.AreEqual(4, r1.ToIntValue());
+        }
+
+        [Test]
+        public void ToIntValueConvertsSpareTo10()
+        {
+            Roll r1 = new Roll('/');
             Assert.AreEqual(10, r1.ToIntValue());
-            r1.Value = 'X';
+        }
+
+        [Test]
+        public void ToIntValueConvertsStrikeTo11()
+        {
+            Roll r1 = new Roll('X');
             Assert.AreEqual(11, r1.ToIntValue());
+        }
+
+        public void ToIntValueConvertsHyphenToZero()
+        {
+            Roll r1 = new Roll('-');
+            Assert.AreEqual(0, r1.ToIntValue());
         }
 
         // Tests that Roll does not allow invalid values
         [Test]
         [ExpectedException(typeof(System.ArgumentException))]
-        public void InvalidValues()
+        public void ConstructorDoesNotAllowInvalidValues()
         {
             Roll r1 = new Roll('f');
         }
 
         [Test]
-        public void Addition()
+        public void RollsMayBeAdded()
         {
             Roll r1 = new Roll('5');
             Roll r2 = new Roll('4');
             Assert.AreEqual(9, r1 + r2);
+        }
+
+        [Test]
+        public void RollsImplicitlyConvertedToIntegers()
+        {
+            Roll r1 = new Roll('5');
+            Assert.AreEqual(5, r1);
         }
     }
 }

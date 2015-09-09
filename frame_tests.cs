@@ -14,14 +14,14 @@ namespace BowlingKata
         }
 
         [Test]
-        public void Constructor()
+        public void ConstructorCreatesEmptyFrame()
         {
             Frame f = new Frame();
             Assert.AreEqual(0, f.Size);
         }
 
         [Test]
-        public void AddRoll()
+        public void AddRollIncreasesFrameSize()
         {
             Frame f = new Frame();
             f.AddRoll(new Roll('-'));
@@ -29,7 +29,7 @@ namespace BowlingKata
         }
 
         [Test]
-        public void AddRolls()
+        public void AddRollsIncreasesFrameSizeByNumberOfArguments()
         {
             Roll r1 = new Roll('-');
             Roll r2 = new Roll('1');
@@ -42,7 +42,7 @@ namespace BowlingKata
 
         [Test]
         [ExpectedException(typeof(FrameFullException))]
-        public void OverfillFrame()
+        public void OverfillFrameThrowsFrameFullExceptionWhenAddingTooManyRolls()
         {
             Frame f = new Frame(2);
             f.AddRoll(new Roll('-'));
@@ -51,7 +51,7 @@ namespace BowlingKata
         }
 
         [Test]
-        public void GetRollScore()
+        public void GetRollScoreCanBeUsedToGetASingleRollsScore()
         {
             Frame f = new Frame();
             f.AddRoll(new Roll('1'));
@@ -61,31 +61,36 @@ namespace BowlingKata
         }
 
         [Test]
-        public void GetRawScore()
+        public void GetRawScoreAddsRollsAsRawValues()
         {
             Frame f = new Frame();
-            Assert.AreEqual(0, f.GetRawScore());
-            f.AddRoll(new Roll('-'));
-            Assert.AreEqual(0, f.GetRawScore());
+            f.AddRoll(new Roll('1'));
+            Assert.AreEqual(1, f.GetRawScore());
+            f.AddRoll(new Roll('X'));
+            Assert.AreEqual(11, f.GetRawScore());
+        }
+
+        [Test]
+        public void GetRawScoreAccountsForPreviousRollWhenCalculatingSpare()
+        {
+            Frame f = new Frame();
+            f.AddRoll(new Roll('1'));
             f.AddRoll(new Roll('/'));
             Assert.AreEqual(10, f.GetRawScore());
         }
 
         [Test]
-        public void GetRoll()
+        public void GetRollReturnsSameObjectThatWasPlacedAtGivenIndex()
         {
             Roll r1 = new Roll('5');
-            Roll r2 = new Roll('2');
             Frame f = new Frame();
             f.AddRoll(r1);
-            f.AddRoll(r2);
             Assert.AreSame(r1, f.GetRoll(0));
-            Assert.AreSame(r2, f.GetRoll(1));
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        public void InvalidRollIndex()
+        public void GetRollScoreThrowsExceptionWhenIndexIsOutOfRange()
         {
             Frame f = new Frame();
             f.AddRoll(new Roll('7'));
@@ -94,7 +99,7 @@ namespace BowlingKata
 
         [Test]
         [ExpectedException(typeof(ArgumentException))]
-        public void OverflowAddRows()
+        public void AddRollsThrowsExceptionWhenTooManyRollsAreAdded()
         {
             Frame f = new Frame(2);
             f.AddRolls(new Roll('-'), new Roll('1'), new Roll('2'));

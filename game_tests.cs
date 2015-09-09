@@ -7,63 +7,70 @@ namespace BowlingKata
     public class GameTests
     {
         [Test]
-        public void Constructor()
+        public void ConstructorCreatesEmptyGame()
         {
             Game g = new Game(string.Empty, 10);
             Assert.AreEqual(10, g.FrameCount);
         }
 
         [Test]
-        public void SetFrames()
+        public void ConstructorCreatesNonEmptyGame()
+        {
+            Game g = new Game("-1-2", maxSize: 2);
+            Assert.AreEqual(2, g.FrameCount);
+            Assert.AreEqual(1, g.GetFrameScore(0));
+        }
+
+        [Test]
+        public void SetFramesCanBeUsedToAddDataToFrames()
         {
             Game g = new Game(maxSize: 2);
-            Assert.AreEqual(2, g.FrameCount);
-            Assert.AreEqual(0, g.GetFrameScore(0));
             g.SetFrames("-123-");
             Assert.AreEqual(1, g.GetFrameScore(0));
             Assert.AreEqual(5, g.GetFrameScore(1));
         }
 
         [Test]
-        public void ClearFrames()
+        public void ClearFramesClearsAllDataInAllFrames()
         {
             Game g = new Game("-1-2", maxSize: 2);
-            Assert.AreEqual(2, g.FrameCount);
-            Assert.AreEqual(1, g.GetFrameScore(0));
-            Assert.AreEqual(2, g.GetFrameScore(1));
-
             g.ClearFrames();
             Assert.AreEqual(0, g.GetFrameScore(0));
             Assert.AreEqual(0, g.GetFrameScore(1));
         }
 
         [Test]
-        public void GetFrameScore()
+        public void GetFrameScoreReturnsCorrectScoreForASingleDigitFrame()
         {
-            Game g = new Game("1234", maxSize: 2);
+            Game g = new Game("12", maxSize: 1);
             Assert.AreEqual(3, g.GetFrameScore(0));
-            Assert.AreEqual(7, g.GetFrameScore(1));
-
-            g.SetFrames("XXXX");
-            Assert.AreEqual(30, g.GetFrameScore(0));
-            Assert.AreEqual(30, g.GetFrameScore(1));
-
-            g.SetFrames("1/-/X");
-            Assert.AreEqual(10, g.GetFrameScore(0));
-            Assert.AreEqual(20, g.GetFrameScore(1));
         }
 
         [Test]
-        public void GetScore()
+        public void GetFrameScoreReturnsCorrectScoreForSpareFrame()
+        {
+            Game g = new Game("1/5-", maxSize: 2);
+            Assert.AreEqual(15, g.GetFrameScore(0));
+        }
+
+        [Test]
+        public void GetFrameScoreReturnsCorrectScoreForStrikeFrame()
+        {
+            Game g = new Game("X14", maxSize: 2);
+            Assert.AreEqual(15, g.GetFrameScore(0));
+        }
+
+        [Test]
+        public void GetScoreDoesLookAheadToLastFrame()
         {
             Game g = new Game("XXXXXXXXXXXX", maxSize: 10);
             Assert.AreEqual(300, g.GetScore());
+        }
 
-            g.SetFrames("9-9-9-9-9-9-9-9-9-9-");
-            Assert.AreEqual(90, g.GetScore());
-
-            g.SetFrames("5/5/5/5/5/5/5/5/5/5/5");
-            Console.WriteLine("Last frame score: {0}", g.GetFrameScore(9));
+        [Test]
+        public void GetScoreSubtractsFirstRollInCaseOfSpare()
+        {
+            Game g = new Game("5/5/5/5/5/5/5/5/5/5/5", maxSize: 10);
             Assert.AreEqual(150, g.GetScore());
         }
     }

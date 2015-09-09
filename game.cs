@@ -61,7 +61,6 @@ namespace BowlingKata
             // Look ahead logic
             if (rawScore >= 10)
             {
-
                 // Advance to next frame if there is one
                 if (index < FrameCount - 1)
                 {
