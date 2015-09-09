@@ -21,7 +21,11 @@ namespace BowlingKata
             {
                 if (!AllowedValues.Contains(string.Empty + value))
                 {
-                    throw new InvalidValueException();
+                    throw new System.ArgumentException(
+                        string.Format(
+                            "`{0}` is not in allowed values `{1}`",
+                            value,
+                            AllowedValues));
                 }
 
                 _value = value;

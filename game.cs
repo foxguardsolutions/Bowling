@@ -58,13 +58,18 @@ namespace BowlingKata
             Frame f;
             int end;
 
+            // Look ahead logic
             if (rawScore >= 10)
             {
+
+                // Advance to next frame if there is one
                 if (index < FrameCount - 1)
                 {
                     f = _frames[++index];
                     end = (rawScore % 10) + 1;
                 }
+
+                // Else just count the total of this frame
                 else
                 {
                     f = _frames[index];
@@ -89,6 +94,8 @@ namespace BowlingKata
                         rs = f.GetRollScore(0);
                     }
 
+                    // Subtract off the previous score, because rs is
+                    // 10 including rollScore
                     if (rs == 10)
                     {
                         rollScore -= rollScore;
@@ -116,6 +123,7 @@ namespace BowlingKata
 
         private int RawScoreToRealScore(int score)
         {
+            // Takes care of converting "X" to 10 pins
             return (score > 10) ? (score / 10) * 10 : score;
         }
     }

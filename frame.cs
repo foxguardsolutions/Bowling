@@ -34,7 +34,9 @@ namespace BowlingKata
         {
             if (rolls.Length > _rolls.Length)
             {
-                throw new ArgumentException("Number of rolls exceeds length of frame", "rolls");
+                throw new ArgumentException(
+                    "Number of rolls exceeds length of frame",
+                    "rolls");
             }
 
             foreach (Roll roll in rolls)

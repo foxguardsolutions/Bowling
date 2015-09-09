@@ -39,7 +39,7 @@ namespace BowlingKata
 
         // Tests that Roll does not allow invalid values
         [Test]
-        [ExpectedException(typeof(InvalidValueException))]
+        [ExpectedException(typeof(System.ArgumentException))]
         public void InvalidValues()
         {
             Roll r1 = new Roll('f');
