@@ -67,7 +67,9 @@ namespace BowlingKata
             f.AddRoll(new Roll('1'));
             Assert.AreEqual(1, f.GetRawScore());
             f.AddRoll(new Roll('X'));
-            Assert.AreEqual(11, f.GetRawScore());
+
+            // 12 because X is technically 11
+            Assert.AreEqual(12, f.GetRawScore());
         }
 
         [Test]
