@@ -50,7 +50,6 @@ namespace BowlingKata
             int ret = 0;
             for (int i = 0; i < Size; i++)
             {
-                // ret = (_rolls[i] >= 10) ? _rolls[i] : ret + _rolls[i];
                 ret += GetRollScore(i);
             }
 

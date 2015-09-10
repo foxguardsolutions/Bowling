@@ -32,19 +32,6 @@ namespace BowlingKata
             }
         }
 
-        public void SetFrames(string game)
-        {
-            int fi = 0;
-            Frame fp = _frames[fi];
-
-            foreach (char ch in game)
-            {
-                Roll r = new Roll(ch);
-                GetNextFrameWithEmptyRoll(ref fp, ref fi);
-                fp.AddRoll(r);
-            }
-        }
-
         public int CalculateLookAhead(Frame f, int frameIndex, int numRolls)
         {
             int rollScore = 0;
@@ -121,6 +108,18 @@ namespace BowlingKata
         {
             // Takes care of converting "X" to 10 pins
             return (score > 10) ? (score / 10) * 10 : score;
+        }
+
+        public void SetFrames(string game)
+        {
+            int fi = 0;
+            Frame fp = _frames[fi];
+
+            foreach (char ch in game)
+            {
+                GetNextFrameWithEmptyRoll(ref fp, ref fi);
+                fp.AddRoll(new Roll(ch));
+            }
         }
     }
 }
