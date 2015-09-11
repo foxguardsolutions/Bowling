@@ -51,13 +51,13 @@
   <ItemGroup>
     <Compile Include="BowlingKata.cs" />
     <Compile Include="FrameFullException.cs" />
-    <Compile Include="frame_tests.cs" />
-    <Compile Include="frame.cs" />
-    <Compile Include="game.cs" />
-    <Compile Include="game_tests.cs" />
+    <Compile Include="FrameTests.cs" />
+    <Compile Include="Frame.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameTests.cs" />
     <Compile Include="InvalidValueException.cs" />
-    <Compile Include="roll.cs" />
-    <Compile Include="roll_tests.cs" />
+    <Compile Include="Roll.cs" />
+    <Compile Include="RollTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".roll.cs.swp" />

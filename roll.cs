@@ -3,7 +3,6 @@ namespace BowlingKata
     public class Roll
     {
         private char _value;
-        private static string _allowedValues;
 
         public static string AllowedValues
         {
