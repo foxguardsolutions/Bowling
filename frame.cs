@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Linq;
 
 namespace BowlingKata
 {
     public class Frame
     {
+        private const int _maxPointsPerRoll = 10;
+        private readonly int _maxSize;
         private Roll[] _rolls;
         private int _size;
 
-        // private int _total;
         public int Size
         {
             get { return _size; }
@@ -16,15 +18,19 @@ namespace BowlingKata
 
         public Frame(int maxSize = 5)
         {
-            _rolls = new Roll[maxSize];
+            _maxSize = maxSize;
+            _rolls = new Roll[_maxSize];
             Size = 0;
         }
 
         public void AddRoll(Roll r)
         {
-            if (Size >= _rolls.Length)
+            if (Size >= _maxSize)
             {
-                throw new FrameFullException();
+                throw new FrameFullException(
+                    string.Format(
+                        "Frame already contains maximum amount ({0}) of rolls",
+                        _maxSize));
             }
 
             _rolls[Size++] = r;
@@ -32,35 +38,29 @@ namespace BowlingKata
 
         public void AddRolls(params Roll[] rolls)
         {
-            if (rolls.Length > _rolls.Length)
+            if (rolls.Length > _maxSize)
             {
                 throw new ArgumentException(
                     "Number of rolls exceeds length of frame",
                     "rolls");
             }
 
-            foreach (Roll roll in rolls)
-            {
-                AddRoll(roll);
-            }
+            rolls.ToList().ForEach(AddRoll);
         }
 
         public int GetRawScore()
         {
-            int ret = 0;
-            for (int i = 0; i < Size; i++)
-            {
-                ret += GetRollScore(i);
-            }
-
-            return ret;
+            return Enumerable.Range(0, Size).Select(GetRollScore).Sum();
         }
 
         public Roll GetRoll(int index)
         {
             if (index >= Size)
             {
-                throw new ArgumentException("Index is out of range", "index");
+                throw new IndexOutOfRangeException(
+                    string.Format(
+                        "'index' ({0}) is out of range {1}-{2}",
+                        index, 0, Size - 1));
             }
 
             return _rolls[index];
@@ -68,10 +68,10 @@ namespace BowlingKata
 
         public int GetRollScore(int index)
         {
-            int ret = GetRoll(index);
-            if (ret == 10)
+            int ret = (int)GetRoll(index);
+            if (ret == _maxPointsPerRoll)
             {
-                ret -= GetRoll(index - 1);
+                ret -= (int)GetRoll(index - 1);
             }
 
             return ret;

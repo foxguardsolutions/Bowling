@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
 
 namespace BowlingKata
 {
     public class Game
     {
+        private const int _rollsPerFrame = 2;
+        private const int _maxSize = 10;
+        private const int _maxScorePerRoll = 10;
         private int _frameCount;
         private Frame[] _frames;
-        private int _rollsPerFrame = 2;
 
         public int FrameCount
         {
@@ -14,73 +17,65 @@ namespace BowlingKata
             set { _frameCount = value; }
         }
 
-        public Game(string game = "", int maxSize = 10)
+        public Game(string game = "")
         {
             Roll.AllowedValues = "-123456789/X";
-            FrameCount = maxSize;
-            _frames = new Frame[maxSize];
-            ClearFrames();
+            FrameCount = _maxSize;
+            _frames = new Frame[_maxSize];
+            InitializeFrames();
             SetFrames(game);
         }
 
-        private void GetNextFrameWithEmptyRoll(ref Frame currFrame, ref int frameIndex)
+        private Frame GetNextFrameWithEmptyRoll(Frame currentFrame)
         {
-            if ((currFrame.GetRawScore() >= 10 || currFrame.Size >= _rollsPerFrame)
-                    && frameIndex < FrameCount - 1)
+            if ((currentFrame.GetRawScore() >= _maxScorePerRoll || currentFrame.Size >= _rollsPerFrame)
+                    && currentFrame != _frames.Last())
             {
-                currFrame = _frames[++frameIndex];
+                currentFrame = _frames.SkipWhile(x => x != currentFrame).Skip(1).First();
             }
+
+            return currentFrame;
         }
 
-        public int CalculateLookAhead(Frame f, int frameIndex, int numRolls)
+        public int CalculateLookAhead(Frame currentFrame, int frameIndex, int numRolls)
         {
             int rollScore = 0;
             for (int i = 0; i < numRolls; i++)
             {
                 int index = i;
-                if (index >= f.Size)
+                if (index >= currentFrame.Size)
                 {
                     index = 0;
-                    f = _frames[++frameIndex];
+                    currentFrame = _frames[++frameIndex];
                 }
 
-                rollScore += RawScoreToRealScore(f.GetRollScore(index));
+                rollScore += RawScoreToRealScore(currentFrame.GetRollScore(index));
             }
 
             return rollScore;
         }
 
-        public void ClearFrames()
+        private void InitializeFrames()
         {
-            for (int i = 0; i < FrameCount - 1; i++)
-            {
-                _frames[i] = new Frame(_rollsPerFrame);
-            }
-
+            Enumerable.Range(0, FrameCount - 1).Select(x => _frames[x] = new Frame(_rollsPerFrame)).ToArray();
             _frames[FrameCount - 1] = new Frame(_rollsPerFrame + 1);
         }
 
         public int GetFrameScore(int index)
         {
-            int rawScore = _frames[index].GetRawScore();
-            int score = RawScoreToRealScore(rawScore);
+            var rawScore = _frames[index].GetRawScore();
+            var score = RawScoreToRealScore(rawScore);
             return LookAhead(index, rawScore, score);
         }
 
         public int GetScore()
         {
-            int ret = 0;
-            for (int i = 0; i < FrameCount; i++)
-            {
-                ret += GetFrameScore(i);
-            }
-
-            return ret;
+            return Enumerable.Range(0, FrameCount).Select(x => GetFrameScore(x)).Sum();
         }
 
         private int LookAhead(int index, int rawScore, int realScore)
         {
-            if (rawScore >= 10)
+            if (rawScore >= _maxScorePerRoll)
             {
                 return (index < FrameCount - 1) ?
                     LookAheadIntermediateFrame(index, rawScore, realScore) :
@@ -92,33 +87,32 @@ namespace BowlingKata
 
         private int LookAheadIntermediateFrame(int index, int rawScore, int currScore)
         {
-            Frame f = _frames[++index];
-            int numRolls = (rawScore % 10) + 1;
-            return currScore + CalculateLookAhead(f, index, numRolls);
+            var nextFrame = _frames[++index];
+            var numRolls = (rawScore % _maxScorePerRoll) + 1;
+            return currScore + CalculateLookAhead(nextFrame, index, numRolls);
         }
 
         private int LookAheadLastFrame(int index)
         {
-            Frame f = _frames[index];
-            int numRolls = f.Size;
-            return CalculateLookAhead(f, index, numRolls);
+            var currentFrame = _frames[index];
+            var numRolls = currentFrame.Size;
+            return CalculateLookAhead(currentFrame, index, numRolls);
         }
 
         private int RawScoreToRealScore(int score)
         {
-            // Takes care of converting "X" to 10 pins
-            return (score > 10) ? (score / 10) * 10 : score;
+            // Takes care of converting "X" to _maxScorePerRoll pins
+            return (score > _maxScorePerRoll) ? (score / _maxScorePerRoll) * _maxScorePerRoll : score;
         }
 
         public void SetFrames(string game)
         {
-            int fi = 0;
-            Frame fp = _frames[fi];
+            var framePointer = _frames[0];
 
-            foreach (char ch in game)
+            foreach (var ch in game)
             {
-                GetNextFrameWithEmptyRoll(ref fp, ref fi);
-                fp.AddRoll(new Roll(ch));
+                framePointer = GetNextFrameWithEmptyRoll(framePointer);
+                framePointer.AddRoll(new Roll(ch));
             }
         }
     }

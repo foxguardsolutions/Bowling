@@ -7,8 +7,7 @@ namespace BowlingKata
 
         public static string AllowedValues
         {
-            get { return _allowedValues; }
-            set { _allowedValues = value; }
+            get; set;
         }
 
         public char Value
@@ -21,11 +20,10 @@ namespace BowlingKata
             {
                 if (!AllowedValues.Contains(string.Empty + value))
                 {
-                    throw new System.ArgumentException(
-                        string.Format(
-                            "`{0}` is not in allowed values `{1}`",
-                            value,
-                            AllowedValues));
+                    throw new System.ArgumentOutOfRangeException(
+                        "Value",
+                        value,
+                        string.Format("Allowed values are: `{0}`", AllowedValues));
                 }
 
                 _value = value;
@@ -47,7 +45,7 @@ namespace BowlingKata
             return AllowedValues.IndexOf(Value);
         }
 
-        public static implicit operator int(Roll r)
+        public static explicit operator int(Roll r)
         {
             return r.ToIntValue();
         }

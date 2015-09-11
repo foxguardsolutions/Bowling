@@ -1,6 +1,9 @@
 ﻿namespace BowlingKata
 {
-    public class FrameFullException : System.Exception
+    public class FrameFullException : System.InvalidOperationException
     {
+        public FrameFullException(string message) : base(message)
+        {
+        }
     }
 }
