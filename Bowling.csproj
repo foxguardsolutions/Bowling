@@ -62,11 +62,11 @@
     <Analyzer Include="packages\StyleCop.Analyzers.1.0.0-beta012\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\BowlingMain.cs" />
-    <Compile Include="src\Roll.cs" />
-    <Compile Include="src\Game.cs" />
-    <Compile Include="test\RollTest.cs" />
-    <Compile Include="test\GameTest.cs" />
+    <Compile Include="BowlingMain.cs" />
+    <Compile Include="Roll.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="RollTest.cs" />
+    <Compile Include="GameTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
