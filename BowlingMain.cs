@@ -14,9 +14,7 @@ namespace Bowling
 
                 Game bowlingGame = new Game(rolls);
 
-                int score = bowlingGame.CalculateScore();
-
-                Console.WriteLine("You scored: " + score);
+                Console.WriteLine("You scored: " + bowlingGame.TotalScore);
             }
         }
     }

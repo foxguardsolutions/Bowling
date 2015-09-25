@@ -17,9 +17,7 @@
         {
             Game game = new Game(rolls);
 
-            int finalScore = game.CalculateScore();
-
-            Assert.AreEqual(finalScore, score);
+            Assert.AreEqual(game.TotalScore, score);
         }
     }
 }
