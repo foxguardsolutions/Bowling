@@ -14,12 +14,21 @@ namespace Bowling_kata
                 {'-', 0},
         };
 
-        public static int RollValue(char mark) {
+        public static int getRollValue(char mark) {
             if (roll_values.ContainsKey(mark)) {
                 return roll_values[mark];
             } else {
                 return (int)Char.GetNumericValue(mark);
             }
+        }
+    }
+
+    public class Roll {
+        public int value, score;
+
+        public Roll(int value, int score) {
+            this.value = value;
+            this.score = score;
         }
     }
 }

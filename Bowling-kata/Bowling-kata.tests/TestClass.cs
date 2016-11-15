@@ -14,16 +14,23 @@ namespace Bowling_kata.tests {
         }
 
         [Test]
-        public void testRollValue() {
+        public void testGetRollValue() {
             var strike = 'X';
             var spare = '/';
             var gutter = '-';
             var other_roll = '5';
 
-            Assert.AreEqual(Bowling_kata.RollValue(strike), 10);
-            Assert.AreEqual(Bowling_kata.RollValue(spare), 10);
-            Assert.AreEqual(Bowling_kata.RollValue(gutter), 0);
-            Assert.AreEqual(Bowling_kata.RollValue(other_roll), 5);
+            Assert.AreEqual(Bowling_kata.getRollValue(strike), 10);
+            Assert.AreEqual(Bowling_kata.getRollValue(spare), 10);
+            Assert.AreEqual(Bowling_kata.getRollValue(gutter), 0);
+            Assert.AreEqual(Bowling_kata.getRollValue(other_roll), 5);
+        }
+
+        [Test]
+        public void testNewRoll() {
+            var roll = new Roll(10, 15);
+            Assert.AreEqual(roll.score, 15);
+            Assert.AreEqual(roll.value, 10);
         }
     }
 }
