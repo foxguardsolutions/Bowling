@@ -21,10 +21,14 @@ namespace Bowling_kata {
 
     public class Bowling_kata {
 
+        const char SPARE = '/';
+        const char STRIKE = 'X';
+        const char GUTTER = '-';
+
         static Dictionary<char, int> roll_values = new Dictionary<char, int>() {
-                {'X', 10},
-                {'/', 10},
-                {'-', 0},
+                {STRIKE, 10},
+                {SPARE, 10},
+                {GUTTER, 0},
         };
 
         public static int ValueFromChar(char mark) {
@@ -37,9 +41,33 @@ namespace Bowling_kata {
 
         public static int Main(string roll_sequence) {
             int total = 0;
+            int last_value = 0;
+            int this_value;
+            int bonus = 0;
 
             foreach (char c in roll_sequence) {
-                total += ValueFromChar(c);
+                this_value = ValueFromChar(c);
+
+                // Check for a spare
+                if (c == SPARE) {
+                    // Count only the pins dropped on this roll
+                    this_value -= last_value;
+                }
+
+                total += this_value;
+
+                // Tally bonus scores
+                if (bonus > 0) {
+                    total += this_value;
+                    bonus -= 1;
+                }
+
+                // Check for bonuses on future rolls
+                if (c == SPARE) {
+                    bonus = 1;
+                }
+
+                last_value = this_value;
             }
 
             return total;

@@ -39,7 +39,10 @@ namespace Bowling_kata.tests {
         [TestCase("--------------------", ExpectedResult = 0, TestName = "testFullGutterGame")]
         [TestCase("123", ExpectedResult = 6, TestName = "testShortNumbersGame")]
         [TestCase("9-9-9-9-9-9-9-9-9-9-", ExpectedResult = 90, TestName = "testFullNumbersGame")]
-        [TestCase("5/-", ExpectedResult = 10, TestName = "testShortSpareNoBonusGame")]
+        [TestCase("5/-", ExpectedResult = 10, TestName = "testShortSpareNoBonus")]
+        [TestCase("5/1", ExpectedResult = 12, TestName = "testShortSpareWithBonus")]
+        [TestCase("X--1", ExpectedResult = 11, TestName = "testShortStrikeNoBonus")]
+        [TestCase("X51", ExpectedResult = 22, TestName = "testShortStrikeWithBonus")]
         public int testGame(string roll_sequence) {
             return Bowling_kata.Main(roll_sequence);
         }
