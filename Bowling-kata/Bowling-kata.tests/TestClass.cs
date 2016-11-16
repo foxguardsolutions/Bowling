@@ -14,23 +14,34 @@ namespace Bowling_kata.tests {
         }
 
         [Test]
-        public void testGetRollValue() {
-            var strike = 'X';
-            var spare = '/';
-            var gutter = '-';
-            var other_roll = '5';
-
-            Assert.AreEqual(Bowling_kata.getRollValue(strike), 10);
-            Assert.AreEqual(Bowling_kata.getRollValue(spare), 10);
-            Assert.AreEqual(Bowling_kata.getRollValue(gutter), 0);
-            Assert.AreEqual(Bowling_kata.getRollValue(other_roll), 5);
+        [TestCase('X', ExpectedResult = 10, TestName = "testGetRollValueStrike")]
+        [TestCase('/', ExpectedResult = 10, TestName = "testGetRollValueSpare")]
+        [TestCase('-', ExpectedResult = 0, TestName = "testGetRollValueGutter")]
+        [TestCase('5', ExpectedResult = 5, TestName = "testGetRollValueNumber")]
+        public int testGetRollValue(char roll) {
+            return Bowling_kata.ValueFromChar(roll);
         }
 
         [Test]
-        public void testNewRoll() {
-            var roll = new Roll(10, 15);
-            Assert.AreEqual(roll.score, 15);
-            Assert.AreEqual(roll.value, 10);
+        public void testNewRollScore() {
+            var roll = new Roll('-', false);
+            Assert.AreEqual(roll.score, 0);
+        }
+
+        [Test]
+        public void testNewRollValue() {
+            var roll = new Roll('-', false);
+            Assert.AreEqual(roll.value, 0);
+        }
+
+        [Test]
+        [TestCase("---", ExpectedResult = 0, TestName = "testShortGutterGame")]
+        [TestCase("--------------------", ExpectedResult = 0, TestName = "testFullGutterGame")]
+        [TestCase("123", ExpectedResult = 6, TestName = "testShortNumbersGame")]
+        [TestCase("9-9-9-9-9-9-9-9-9-9-", ExpectedResult = 90, TestName = "testFullNumbersGame")]
+        [TestCase("5/-", ExpectedResult = 10, TestName = "testShortSpareNoBonusGame")]
+        public int testGame(string roll_sequence) {
+            return Bowling_kata.Main(roll_sequence);
         }
     }
 }
