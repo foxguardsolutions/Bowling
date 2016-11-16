@@ -22,17 +22,7 @@ namespace Bowling_kata.tests {
             return Bowling_kata.ValueFromChar(roll);
         }
 
-        [Test]
-        public void testNewRollScore() {
-            var roll = new Roll('-', false);
-            Assert.AreEqual(roll.score, 0);
-        }
-
-        [Test]
-        public void testNewRollValue() {
-            var roll = new Roll('-', false);
-            Assert.AreEqual(roll.value, 0);
-        }
+        
 
         [Test]
         [TestCase("---", ExpectedResult = 0, TestName = "testShortGutterGame")]
@@ -43,6 +33,8 @@ namespace Bowling_kata.tests {
         [TestCase("5/1", ExpectedResult = 12, TestName = "testShortSpareWithBonus")]
         [TestCase("X--1", ExpectedResult = 11, TestName = "testShortStrikeNoBonus")]
         [TestCase("X51", ExpectedResult = 22, TestName = "testShortStrikeWithBonus")]
+        [TestCase("X5/", ExpectedResult = 30, TestName = "testShortStrikeSpare")]
+        [TestCase("XX51", ExpectedResult = 47, TestName = "testShortDoubleStrike")]
         public int testGame(string roll_sequence) {
             return Bowling_kata.Main(roll_sequence);
         }

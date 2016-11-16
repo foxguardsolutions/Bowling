@@ -6,19 +6,6 @@ using System.Threading.Tasks;
 
 namespace Bowling_kata {
 
-    public class Roll {
-        public int value, score;
-
-        public Roll(char mark, bool pending_spare) {
-            value = Bowling_kata.ValueFromChar(mark);
-            if (!pending_spare) {
-                score = value;
-            } else {
-                score = 0;
-            }
-        }
-    }
-
     public class Bowling_kata {
 
         const char SPARE = '/';
@@ -44,27 +31,38 @@ namespace Bowling_kata {
             int last_value = 0;
             int this_value;
             int bonus = 0;
+            int double_bonus = 0;
 
-            foreach (char c in roll_sequence) {
-                this_value = ValueFromChar(c);
+            foreach (char roll in roll_sequence) {
+                this_value = ValueFromChar(roll);
 
                 // Check for a spare
-                if (c == SPARE) {
+                if (roll == SPARE) {
                     // Count only the pins dropped on this roll
                     this_value -= last_value;
                 }
 
+                // Tally this roll
                 total += this_value;
 
-                // Tally bonus scores
+                // Tally any applicable bonus scores
                 if (bonus > 0) {
                     total += this_value;
                     bonus -= 1;
                 }
+                if (double_bonus > 0) {
+                    total += this_value;
+                    double_bonus -= 1;
+                }
 
                 // Check for bonuses on future rolls
-                if (c == SPARE) {
+                if (roll == SPARE) {
                     bonus = 1;
+                } else if (roll == STRIKE) {
+                    if (bonus > 0) {
+                        double_bonus = 1;
+                    }
+                    bonus = 2;
                 }
 
                 last_value = this_value;
