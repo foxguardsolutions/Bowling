@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BowlingKata.cs" />
+    <Compile Include="Ball.cs" />
+    <Compile Include="Bonuses.cs" />
+    <Compile Include="BowlingSettings.cs" />
+    <Compile Include="Frame.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling-kata", "Bowling-kat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling-kata.tests", "Bowling-kata.tests\Bowling-kata.tests.csproj", "{47921E79-8E23-4038-9AB2-BE88EE10A22A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bowling-trial", "..\..\Bowling-Trial\Bowling-trial\Bowling-trial\Bowling-trial.csproj", "{C9E3E10F-FD2C-4E41-A1D2-1F9650468CBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{47921E79-8E23-4038-9AB2-BE88EE10A22A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47921E79-8E23-4038-9AB2-BE88EE10A22A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47921E79-8E23-4038-9AB2-BE88EE10A22A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9E3E10F-FD2C-4E41-A1D2-1F9650468CBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9E3E10F-FD2C-4E41-A1D2-1F9650468CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9E3E10F-FD2C-4E41-A1D2-1F9650468CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9E3E10F-FD2C-4E41-A1D2-1F9650468CBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
