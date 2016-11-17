@@ -27,11 +27,13 @@ namespace Bowling_kata {
         }
 
         public static int Main(string roll_sequence) {
-            int total = 0;
+            int score = 0;
             int last_value = 0;
             int this_value;
             int bonus = 0;
             int double_bonus = 0;
+            int frame = 0;
+            bool first_roll = true;
 
             foreach (char roll in roll_sequence) {
                 this_value = ValueFromChar(roll);
@@ -42,17 +44,19 @@ namespace Bowling_kata {
                     this_value -= last_value;
                 }
 
-                // Tally this roll
-                total += this_value;
+                // Tally this roll, unless it's in an extra frame
+                if (frame < 10) {
+                    score += this_value;
+                }
 
                 // Tally any applicable bonus scores
                 if (bonus > 0) {
-                    total += this_value;
-                    bonus -= 1;
+                    score += this_value;
+                    bonus--;
                 }
                 if (double_bonus > 0) {
-                    total += this_value;
-                    double_bonus -= 1;
+                    score += this_value;
+                    double_bonus--;
                 }
 
                 // Check for bonuses on future rolls
@@ -65,10 +69,18 @@ namespace Bowling_kata {
                     bonus = 2;
                 }
 
+                // See if this was the last roll of a frame
+                if (!first_roll || this_value == 10) {
+                    frame++;
+                    first_roll = true;
+                } else {
+                    first_roll = false;
+                }
+
                 last_value = this_value;
             }
 
-            return total;
+            return score;
         }
     }
 }

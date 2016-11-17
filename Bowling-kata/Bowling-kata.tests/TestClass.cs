@@ -22,8 +22,6 @@ namespace Bowling_kata.tests {
             return Bowling_kata.ValueFromChar(roll);
         }
 
-        
-
         [Test]
         [TestCase("---", ExpectedResult = 0, TestName = "testShortGutterGame")]
         [TestCase("--------------------", ExpectedResult = 0, TestName = "testFullGutterGame")]
@@ -35,6 +33,8 @@ namespace Bowling_kata.tests {
         [TestCase("X51", ExpectedResult = 22, TestName = "testShortStrikeWithBonus")]
         [TestCase("X5/", ExpectedResult = 30, TestName = "testShortStrikeSpare")]
         [TestCase("XX51", ExpectedResult = 47, TestName = "testShortDoubleStrike")]
+        [TestCase("5/5/5/5/5/5/5/5/5/5/5", ExpectedResult = 150, TestName = "testFullGameOneExtraRoll")]
+        [TestCase("XXXXXXXXXXXX", ExpectedResult = 300, TestName = "testFullGameTwoExtraRolls")]
         public int testGame(string roll_sequence) {
             return Bowling_kata.Main(roll_sequence);
         }
