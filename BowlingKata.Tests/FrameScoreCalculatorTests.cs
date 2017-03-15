@@ -19,7 +19,7 @@ namespace BowlingKata.Tests
         }
 
         [Test]
-        public void GetFrameLength_GutterBalls_Length2()
+        public void GetFrameLength_GivenGutterBalls_ReturnsLength2()
         {
             Assert.AreEqual(2, _frameScoreCalculator.GetFrameLength("--"));
         }
@@ -27,19 +27,19 @@ namespace BowlingKata.Tests
         [TestCase("9-")]
         [TestCase("815-")]
         [TestCase("234561")]
-        public void GetFrameLength_OpenFrameVaryingRollLengths_Length2(string rolls)
+        public void GetFrameLength_GivenOpenFrameWithVaryingNumberOfRolls_ReturnsLength2(string rolls)
         {
             Assert.AreEqual(2, _frameScoreCalculator.GetFrameLength(rolls));
         }
 
         [Test]
-        public void GetFrameLength_Spare_Length2()
+        public void GetFrameLength_GivenSpare_ReturnsLength2()
         {
             Assert.AreEqual(2, _frameScoreCalculator.GetFrameLength("9/"));
         }
 
         [Test]
-        public void GetFrameLength_Stike_Length1()
+        public void GetFrameLength_GivenStike_ReturnsLength1()
         {
             Assert.AreEqual(1, _frameScoreCalculator.GetFrameLength("X"));
         }
@@ -47,7 +47,7 @@ namespace BowlingKata.Tests
         [TestCase("X-")]
         [TestCase("8/")]
         [TestCase("7")]
-        public void GetFrameScore_IncompleteScore_Score0(string rolls)
+        public void GetFrameScore_GivenIncompleteScore_ReturnsScore0(string rolls)
         {
             Assert.AreEqual(0, _frameScoreCalculator.GetFrameScore(rolls));
         }
@@ -55,7 +55,7 @@ namespace BowlingKata.Tests
         [TestCase("9-", 9)]
         [TestCase("815-", 9)]
         [TestCase("234561", 5)]
-        public void GetFrameScore_OpenFrameVaryingRollLengths_ScoreFirstTwoRolls(string frame, int expectedValue)
+        public void GetFrameScore_GivenOpenFrameWithVaryingNumberOfRolls_ReturnsScoreOfFirstTwoRolls(string frame, int expectedValue)
         {
             Assert.AreEqual(expectedValue, _frameScoreCalculator.GetFrameScore(frame));
         }
@@ -63,13 +63,13 @@ namespace BowlingKata.Tests
         [TestCase("9/-", 10)]
         [TestCase("7/3", 13)]
         [TestCase("5/9", 19)]
-        public void GetFrameScore_Spare_Score10PlusNexRoll(string frame, int expectedValue)
+        public void GetFrameScore_GivenSpare_ReturnsScore10PlusNexRoll(string frame, int expectedValue)
         {
             Assert.AreEqual(expectedValue, _frameScoreCalculator.GetFrameScore(frame));
         }
 
         [Test]
-        public void GetFrameScore_Turkey_Score30()
+        public void GetFrameScore_GivenTurkey_ReturnsScore30()
         {
             Assert.AreEqual(30, _frameScoreCalculator.GetFrameScore("XXX"));
         }
