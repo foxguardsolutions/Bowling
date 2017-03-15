@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bowling.cs" />
+    <Compile Include="BowlingProperties.cs" />
     <Compile Include="FrameScoreCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
