@@ -26,7 +26,7 @@ namespace BowlingKata
         {
             var score = 0;
 
-            if (_bowlingProperties.IsCompleteFrame(rolls))
+            if (_bowlingProperties.HasScore(rolls))
                 score = _bowlingProperties.HasMultiFrameScore(rolls) ? GetMultiFrameScore(rolls) : GetScoreOfTwoRolls(rolls);
 
             return score;

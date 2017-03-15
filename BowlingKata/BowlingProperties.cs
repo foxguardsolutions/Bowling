@@ -36,21 +36,21 @@ namespace BowlingKata
             return HasSpare(frame) || HasStrike(frame);
         }
 
-        public bool HasSpare(string frame)
-        {
-            return frame.Length > STANDARD_FRAME_LENGTH && frame[1] == SPARE;
-        }
-
-        public bool HasStrike(string frame)
-        {
-            return frame.Length > STRIKE_FRAME_LENGTH && frame[0] == STRIKE;
-        }
-
-        public bool IsCompleteFrame(string frame)
+        public bool HasScore(string frame)
         {
             return HasMultiFrameScore(frame) ?
                    frame.Length > STANDARD_FRAME_LENGTH :
                    frame.Length > STRIKE_FRAME_LENGTH;
+        }
+
+        public bool HasSpare(string frame)
+        {
+            return frame.Length >= STANDARD_FRAME_LENGTH && frame[1] == SPARE;
+        }
+
+        public bool HasStrike(string frame)
+        {
+            return frame.Length >= STRIKE_FRAME_LENGTH && frame[0] == STRIKE;
         }
     }
 }
