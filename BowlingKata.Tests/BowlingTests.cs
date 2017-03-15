@@ -9,20 +9,20 @@ using System.Threading.Tasks;
 namespace BowlingKata.Tests
 {
     [TestFixture]
-    class BowlingTests
+    public class BowlingTests
     {
-        Bowling game;
+        private Bowling _game;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Init()
         {
-            game = new Bowling();
+            _game = new Bowling();
         }
 
         [Test]
-        public void TestGutterGame()
+        public void CalculateScore_GutterBallGame_ReturnsScore0()
         {
-            Assert.AreEqual(0, game.CalculateScore("--------------------"));
+            Assert.AreEqual(0, _game.CalculateScore("--------------------"));
         }
 
         [TestCase("9", 0)] // Incomplete Frame
@@ -32,13 +32,13 @@ namespace BowlingKata.Tests
         [TestCase("--", 0)]
         public void TestFrameScore(string rolls, int expectedScore)
         {
-            Assert.AreEqual(expectedScore, game.CalculateScore(rolls));
+            Assert.AreEqual(expectedScore, _game.CalculateScore(rolls));
         }
 
         [Test]
         public void TestPerfectGame()
         {
-            Assert.AreEqual(300, game.CalculateScore("XXXXXXXXXXXX"));
+            Assert.AreEqual(300, _game.CalculateScore("XXXXXXXXXXXX"));
         }
 
         [TestCase("819-7263458163369-9-", 90)]
@@ -47,7 +47,7 @@ namespace BowlingKata.Tests
         [TestCase("XX9/XX7/XX2/XX5", 223)]
         public void TestScore(string rolls, int expectedScore)
         {
-            Assert.AreEqual(expectedScore, game.CalculateScore(rolls));
+            Assert.AreEqual(expectedScore, _game.CalculateScore(rolls));
         }
 
         [TestCase("-/-/-/-/-/-/-/-/-/-/-", 100)]
@@ -55,7 +55,7 @@ namespace BowlingKata.Tests
         [TestCase("9/9/9/9/9/9/9/9/9/9/9", 190)]
         public void TestSpare(string rolls, int expectedScore)
         {
-            Assert.AreEqual(expectedScore, game.CalculateScore(rolls));
+            Assert.AreEqual(expectedScore, _game.CalculateScore(rolls));
         }
     }
 }
